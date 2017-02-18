@@ -20,7 +20,7 @@ export GCP_PROJECT=$(gcloud config list --format='value(core.project)')
 ### gce-asia-east1
 
 ```
-kubectl --context="gke_${GCP_PROJECT}_us-central1-b_gce-us-central1" \
+kubectl --context="gke_${GCP_PROJECT}_us-west1-b_gce-us-west1" \
   --namespace=federation \
   create secret generic gce-asia-east1 \
   --from-file=kubeconfigs/gce-asia-east1/kubeconfig
@@ -34,7 +34,7 @@ kubectl --context=federation-cluster \
 ### gce-europe-west1
 
 ```
-kubectl --context="gke_${GCP_PROJECT}_us-central1-b_gce-us-central1" \
+kubectl --context="gke_${GCP_PROJECT}_us-west1-b_gce-us-west1" \
   --namespace=federation \
   create secret generic gce-europe-west1 \
   --from-file=kubeconfigs/gce-europe-west1/kubeconfig
@@ -45,10 +45,24 @@ kubectl --context=federation-cluster \
   create -f clusters/gce-europe-west1.yaml
 ```
 
+### gce-us-west1
+
+```
+kubectl --context="gke_${GCP_PROJECT}_us-west1-b_gce-us-west1" \
+  --namespace=federation \
+  create secret generic gce-us-west1 \
+  --from-file=kubeconfigs/gce-us-west1/kubeconfig
+```
+
+```
+kubectl --context=federation-cluster \
+  create -f clusters/gce-us-west1.yaml
+```
+
 ### gce-us-central1
 
 ```
-kubectl --context="gke_${GCP_PROJECT}_us-central1-b_gce-us-central1" \
+kubectl --context="gke_${GCP_PROJECT}_us-west1-b_gce-us-west1" \
   --namespace=federation \
   create secret generic gce-us-central1 \
   --from-file=kubeconfigs/gce-us-central1/kubeconfig
@@ -62,7 +76,7 @@ kubectl --context=federation-cluster \
 ### gce-us-east1
 
 ```
-kubectl --context="gke_${GCP_PROJECT}_us-central1-b_gce-us-central1" \
+kubectl --context="gke_${GCP_PROJECT}_us-west1-b_gce-us-west1" \
   --namespace=federation \
   create secret generic gce-us-east1 \
   --from-file=kubeconfigs/gce-us-east1/kubeconfig

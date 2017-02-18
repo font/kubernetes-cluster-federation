@@ -8,11 +8,11 @@
 export GCP_PROJECT=$(gcloud config list --format='value(core.project)')
 ```
 
-### Create the Federation API Sever Secret Token
+### Create the Federation API Server Secret Token
 
-The Federation API Sever token was created in the previous lab.
+The Federation API Server token was created in the previous lab.
 
-* [Create the Federation API Sever Secret Token](provision-federation-apiserver.md#create-the-federation-api-server-secret)
+* [Create the Federation API Server Secret Token](provision-federation-apiserver.md#create-the-federation-api-server-secret)
 
 ## Create the Federated API Server Kubeconfig
 
@@ -21,7 +21,7 @@ The federation-controller-manager needs a kubeconfig file to connect to the fede
 Get the federated API server public IP address:
 
 ```
-FEDERATED_API_SERVER_ADDRESS=$(kubectl --context="gke_${GCP_PROJECT}_us-central1-b_gce-us-central1" \
+FEDERATED_API_SERVER_ADDRESS=$(kubectl --context="gke_${GCP_PROJECT}_us-west1-b_gce-us-west1" \
   --namespace=federation \
   get services federation-apiserver \
   -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
@@ -69,7 +69,7 @@ kubectl  config view --flatten --minify > kubeconfigs/federation-apiserver/kubec
 Switch to the host cluster context and create the `federation-apiserver-kubeconfig`, which holds the kubeconfig for the federated API server used by the Federated Controller Manager.
 
 ```
-kubectl --context="gke_${GCP_PROJECT}_us-central1-b_gce-us-central1" \
+kubectl --context="gke_${GCP_PROJECT}_us-west1-b_gce-us-west1" \
   --namespace=federation \
   create secret generic federation-apiserver-kubeconfig \
   --from-file=kubeconfigs/federation-apiserver/kubeconfig
@@ -78,7 +78,7 @@ kubectl --context="gke_${GCP_PROJECT}_us-central1-b_gce-us-central1" \
 Verify
 
 ```
-kubectl --context="gke_${GCP_PROJECT}_us-central1-b_gce-us-central1" \
+kubectl --context="gke_${GCP_PROJECT}_us-west1-b_gce-us-west1" \
   --namespace=federation \
   describe secrets federation-apiserver-kubeconfig
 ```
@@ -86,7 +86,7 @@ kubectl --context="gke_${GCP_PROJECT}_us-central1-b_gce-us-central1" \
 ### Deploy the Federated Controller Manager
 
 ```
-kubectl --context="gke_${GCP_PROJECT}_us-central1-b_gce-us-central1" \
+kubectl --context="gke_${GCP_PROJECT}_us-west1-b_gce-us-west1" \
   --namespace=federation \
   create -f deployments/federation-controller-manager.yaml
 ```
@@ -94,7 +94,7 @@ kubectl --context="gke_${GCP_PROJECT}_us-central1-b_gce-us-central1" \
 Wait for the `federation-controller-manager` pod to be running.
 
 ```
-kubectl --context="gke_${GCP_PROJECT}_us-central1-b_gce-us-central1" \
+kubectl --context="gke_${GCP_PROJECT}_us-west1-b_gce-us-west1" \
   --namespace=federation \
   get pods
 ```

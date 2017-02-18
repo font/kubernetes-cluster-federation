@@ -1,6 +1,6 @@
 # Provision Federated API Server
 
-The Federated API Server will run in the us-central1 cluster.
+The Federated API Server will run in the us-west1 cluster.
 
 The federated controller manager must be able to locate the federated API server when running on the host cluster.
 
@@ -15,14 +15,14 @@ export GCP_PROJECT=$(gcloud config list --format='value(core.project)')
 ## Create the Federated API Server Service
 
 ```
-kubectl --context="gke_${GCP_PROJECT}_us-central1-b_gce-us-central1" \
+kubectl --context="gke_${GCP_PROJECT}_us-west1-b_gce-us-west1" \
   create -f services/federation-apiserver.yaml
 ```
 
 Wait until the `EXTERNAL-IP` is populated as it will be required to configure the federation-controller-manager.
 
 ```
-kubectl --context="gke_${GCP_PROJECT}_us-central1-b_gce-us-central1" \
+kubectl --context="gke_${GCP_PROJECT}_us-west1-b_gce-us-west1" \
   --namespace=federation \
   get services 
 ```
@@ -46,13 +46,13 @@ XXXXXXXXXXXXXXXXXXX,admin,admin
 Store the `known-tokens.csv` file in a Kubernetes secret that will be accessed by the federated API server at deployment time.
 
 ```
-kubectl --context="gke_${GCP_PROJECT}_us-central1-b_gce-us-central1" \
+kubectl --context="gke_${GCP_PROJECT}_us-west1-b_gce-us-west1" \
   --namespace=federation \
   create secret generic federation-apiserver-secrets --from-file=known-tokens.csv
 ```
 
 ```
-kubectl --context="gke_${GCP_PROJECT}_us-central1-b_gce-us-central1" \
+kubectl --context="gke_${GCP_PROJECT}_us-west1-b_gce-us-west1" \
   --namespace=federation \
   describe secrets federation-apiserver-secrets
 ```
@@ -66,7 +66,7 @@ The Federated API Server leverages etcd to store cluster configuration and shoul
 Create a persistent disk for the federated API server:
 
 ```
-kubectl --context="gke_${GCP_PROJECT}_us-central1-b_gce-us-central1" \
+kubectl --context="gke_${GCP_PROJECT}_us-west1-b_gce-us-west1" \
   --namespace=federation \
   create -f pvc/federation-apiserver-etcd.yaml
 ```
@@ -74,7 +74,7 @@ kubectl --context="gke_${GCP_PROJECT}_us-central1-b_gce-us-central1" \
 #### Verify
 
 ```
-kubectl --context="gke_${GCP_PROJECT}_us-central1-b_gce-us-central1" \
+kubectl --context="gke_${GCP_PROJECT}_us-west1-b_gce-us-west1" \
   --namespace=federation \
   get pvc
 ```
@@ -83,7 +83,7 @@ NAME                        STATUS    VOLUME                                    
 federation-apiserver-etcd   Bound     pvc-c49027d3-7099-11e6-848d-42010af00158   10Gi       RWO           5s
 ```
 ```
-kubectl --context="gke_${GCP_PROJECT}_us-central1-b_gce-us-central1" \
+kubectl --context="gke_${GCP_PROJECT}_us-west1-b_gce-us-west1" \
   --namespace=federation \
   get pv
 ```
@@ -97,7 +97,7 @@ pvc-c49027d3-7099-11e6-848d-42010af00158   10Gi       RWO           Bound     fe
 Get the federated API server public IP address.
 
 ```
-FEDERATED_API_SERVER_ADDRESS=$(kubectl --context="gke_${GCP_PROJECT}_us-central1-b_gce-us-central1" \
+FEDERATED_API_SERVER_ADDRESS=$(kubectl --context="gke_${GCP_PROJECT}_us-west1-b_gce-us-west1" \
   --namespace=federation \
   get services federation-apiserver \
   -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
@@ -106,13 +106,13 @@ FEDERATED_API_SERVER_ADDRESS=$(kubectl --context="gke_${GCP_PROJECT}_us-central1
 Edit `deployments/federation-apiserver.yaml` and set the advertise address for the federated API server.
 
 ```
-sed -i "" "s|ADVERTISE_ADDRESS|${FEDERATED_API_SERVER_ADDRESS}|g" deployments/federation-apiserver.yaml
+sed -i "s|ADVERTISE_ADDRESS|${FEDERATED_API_SERVER_ADDRESS}|g" deployments/federation-apiserver.yaml
 ```
 
 Create the federated API server in the host cluster:
 
 ```
-kubectl --context="gke_${GCP_PROJECT}_us-central1-b_gce-us-central1" \
+kubectl --context="gke_${GCP_PROJECT}_us-west1-b_gce-us-west1" \
   --namespace=federation \
   create -f deployments/federation-apiserver.yaml
 ```
@@ -120,7 +120,7 @@ kubectl --context="gke_${GCP_PROJECT}_us-central1-b_gce-us-central1" \
 ### Verify
 
 ```
-kubectl --context="gke_${GCP_PROJECT}_us-central1-b_gce-us-central1" \
+kubectl --context="gke_${GCP_PROJECT}_us-west1-b_gce-us-west1" \
   --namespace=federation \
   get deployments
 ```
@@ -130,7 +130,7 @@ federation-apiserver   1         1         1            0           7s
 ```
 
 ```
-kubectl --context="gke_${GCP_PROJECT}_us-central1-b_gce-us-central1" \
+kubectl --context="gke_${GCP_PROJECT}_us-west1-b_gce-us-west1" \
   --namespace=federation \
   get pods
 ```

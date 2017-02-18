@@ -99,6 +99,30 @@ EOF
 kubectl config view --flatten --minify > kubeconfigs/gce-europe-west1/kubeconfig
 ```
 
+#### gce-us-west1
+
+```
+kubectl config use-context "gke_${GCP_PROJECT}_us-west1-b_gce-us-west1"
+US_WEST_SERVER_ADDRESS=$(kubectl config view --minify -o jsonpath='{.clusters[0].cluster.server}')
+```
+```
+cat > clusters/gce-us-west1.yaml <<EOF
+apiVersion: federation/v1beta1
+kind: Cluster
+metadata:
+  name: gce-us-west1
+spec:
+  serverAddressByClientCIDRs:
+    - clientCIDR: "0.0.0.0/0"
+      serverAddress: "${US_WEST_SERVER_ADDRESS}"
+  secretRef:
+    name: gce-us-west1
+EOF
+```
+```
+kubectl config view --flatten --minify > kubeconfigs/gce-us-west1/kubeconfig
+```
+
 #### gce-us-central1
 
 ```
