@@ -15,7 +15,7 @@ See the [Kubernetes Cluster Federation aka Ubernetes design doc](https://github.
 First checkout this repository which contains the Kubernetes configs required to build the federated control plane.
 
 ```
-git clone https://github.com/kelseyhightower/kubernetes-cluster-federation.git
+git clone https://github.com/font/kubernetes-cluster-federation.git
 cd kubernetes-cluster-federation
 ```
 
