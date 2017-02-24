@@ -85,6 +85,14 @@ kubectl --context="gke_${GCP_PROJECT}_us-west1-b_gce-us-west1" \
 
 ### Deploy the Federated Controller Manager
 
+Be sure to update the `--zone-name` parameter inside the
+[deployments/federation-controller-manager.yaml](deployments/federation-controller-manager.yaml) to match
+the DNS zone name you used when you created the Google DNS Managed Zone.
+
+```
+sed -i 's/federation.com/YOUR_ZONE_NAME/' deployments/federation-controller-manager.yaml
+```
+
 ```
 kubectl --context="gke_${GCP_PROJECT}_us-west1-b_gce-us-west1" \
   --namespace=federation \

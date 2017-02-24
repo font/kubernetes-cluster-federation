@@ -38,6 +38,7 @@ The federated control plane must run in a Kubernetes host cluster which has acce
 * [Provision the Federated API Server](labs/provision-federation-apiserver.md)
 * [Provision the Federated Controller Manager](labs/provision-federation-controller-manager.md)
 * [Adding Clusters to the Federation](labs/adding-clusters.md)
+* [Update KubeDNS with the Federation](labs/update-kubedns.md)
 
 ## Running Federated Workloads
 

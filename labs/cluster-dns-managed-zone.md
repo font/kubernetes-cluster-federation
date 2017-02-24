@@ -4,7 +4,8 @@ Kubernetes federated services have the ability to manage external DNS entries ba
 
 ## Create a Google DNS Managed Zone
 
-The follow command will create a DNS zone named `federation.com`. In a production setup a valid managed zone backed by a registered DNS domain should be used.
+The follow command will create a DNS zone named `federation.com`. Specify your own zone name here. In a production setup a valid managed
+zone backed by a registered DNS domain should be used.
 
 ```
 gcloud dns managed-zones create federation \
