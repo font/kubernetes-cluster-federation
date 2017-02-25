@@ -24,7 +24,8 @@ kubectl --context=federation-cluster delete services nginx
 ```
 
 ```
-kubectl --context="gke_${GCP_PROJECT}_us-west1-b_gce-us-west1" --namespace=federation delete pods,svc,rc,deployment,secret --all
+kubectl --context="gke_${GCP_PROJECT}_us-west1-b_gce-us-west1" \
+    --namespace=federation delete pods,svc,rc,deployment,secret --all
 ```
 
 ```
