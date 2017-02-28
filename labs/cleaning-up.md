@@ -29,6 +29,11 @@ kubectl --context="gke_${GCP_PROJECT}_us-west1-b_gce-us-west1" \
 ```
 
 ```
+kubectl --context="gke_${GCP_PROJECT}_us-west1-b_gce-us-west1" \
+    delete ns federation
+```
+
+```
 kubectl config use-context default-context
 kubectl config delete-context federation-cluster
 ```
