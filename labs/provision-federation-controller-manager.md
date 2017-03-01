@@ -90,7 +90,7 @@ Be sure to update the `--zone-name` parameter inside the
 the DNS zone name you used when you created the Google DNS Managed Zone.
 
 ```
-sed -i 's/federation.com/YOUR_ZONE_NAME/' deployments/federation-controller-manager.yaml
+sed 's/federation.com/YOUR_ZONE_NAME/' deployments/federation-controller-manager.yaml > tmp && mv -f tmp deployments/federation-controller-manager.yaml
 ```
 
 ```

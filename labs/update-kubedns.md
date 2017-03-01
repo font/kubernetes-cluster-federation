@@ -19,7 +19,7 @@ export GCP_PROJECT=$(gcloud config list --format='value(core.project)')
 Use the zone name you specified when creating the Google DNS Managed Zone.
 
 ```
-sed -i 's/federation.com/YOUR_ZONE_NAME/' configmap/federation-cm.yaml
+sed 's/federation.com/YOUR_ZONE_NAME/' configmap/federation-cm.yaml > tmp && mv -f tmp configmap/federation-cm.yaml
 ```
 
 
