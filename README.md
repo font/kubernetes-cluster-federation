@@ -17,7 +17,7 @@ First checkout this repository which contains the Kubernetes configs required to
 ```
 git clone https://github.com/font/kubernetes-cluster-federation.git
 cd kubernetes-cluster-federation
-git checkout v1.5.2
+git checkout v1.5.3
 ```
 
 ## Bootrapping Tasks
